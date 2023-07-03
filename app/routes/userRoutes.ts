@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { usersController } from "../controllers/usersController";
 
-export const routes = [
+export const userRoutes = [
   {
     method: 'GET',
     path: '/api/users',

@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { routes } from "./routes/userRoutes";
+import { userRoutes } from "./routes/userRoutes";
 import { getBaseUrl, getUserIdFromUrl } from "./utils/utils";
 
 export const app = (req: IncomingMessage, res: ServerResponse) => {
@@ -7,7 +7,7 @@ export const app = (req: IncomingMessage, res: ServerResponse) => {
   const id = getUserIdFromUrl(url);
   if (id) url = getBaseUrl(url);
   let routePath = id ? url + '{userId}' : url;
-  const route = routes.find((route) => route.method === req.method && route.path === routePath)
+  const route = userRoutes.find((route) => route.method === req.method && route.path === routePath)
   try {
     if (route) {
       route.handler(req, res)
