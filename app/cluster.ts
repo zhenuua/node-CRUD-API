@@ -42,7 +42,7 @@ if (cluster.isPrimary) {
       },
     ),
     );
-    numWorker > numCPUs ? numWorker = 1 : numWorker += 1
+    numWorker >= numCPUs ? numWorker = 1 : numWorker += 1
     console.log(`load balancer sends request to ${workerPort}`);
   })
   server.listen(PORT, () => {
