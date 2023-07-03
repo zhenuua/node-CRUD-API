@@ -12,57 +12,70 @@ export const usersController = {
   },
 
   async getUserById(req: IncomingMessage, res: ServerResponse) {
-    const id = getUserIdFromUrl(req.url)
-    this.errHandlerUserId(id, res)
+    try {
+      const id = getUserIdFromUrl(req.url)
+      this.errHandlerUserId(id, res)
 
-    const user = await getUserData(id);
-    this.errHandlerUser(user, res)
+      const user = await getUserData(id);
+      this.errHandlerUser(user, res)
 
-    res.statusCode = 200;
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(user));
+      res.statusCode = 200;
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(user));
+    }
+    catch (err: any) { console.log(err.message) }
   },
 
   async createUser(req: IncomingMessage, res: ServerResponse) {
-    const body = await getRequestBody(req);
-    const bodyData = JSON.parse(body) as IUserPayload
-    this.errHandlerUserBody(bodyData, res)
+    try {
+      const body = await getRequestBody(req);
+      const bodyData = JSON.parse(body) as IUserPayload
+      this.errHandlerUserBody(bodyData, res)
 
-    const newUser = await createUserData(bodyData)
-    res.writeHead(201, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(newUser));
+      const newUser = await createUserData(bodyData)
+      res.writeHead(201, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(newUser));
+    }
+    catch (err: any) { console.log(err.message) }
   },
 
   async updateUserById(req: IncomingMessage, res: ServerResponse) {
-    const id = getUserIdFromUrl(req.url)
-    this.errHandlerUserId(id, res)
+    try {
+      const id = getUserIdFromUrl(req.url)
+      this.errHandlerUserId(id, res)
 
-    const body = await getRequestBody(req);
-    const bodyData = JSON.parse(body) as IUserPayload
-    this.errHandlerUserBody(bodyData, res);
+      const body = await getRequestBody(req);
+      const bodyData = JSON.parse(body) as IUserPayload
+      this.errHandlerUserBody(bodyData, res);
 
-    const updatedUser = await updateUserData(id, bodyData);
-    this.errHandlerUser(updatedUser, res)
+      const updatedUser = await updateUserData(id, bodyData);
+      this.errHandlerUser(updatedUser, res)
 
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end();
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end();
+    }
+    catch (err: any) { console.log(err.message) }
   },
 
   async deleteUserById(req: IncomingMessage, res: ServerResponse) {
-    const id = getUserIdFromUrl(req.url)
-    this.errHandlerUserId(id, res)
+    try {
+      const id = getUserIdFromUrl(req.url)
+      this.errHandlerUserId(id, res)
 
-    const deletedUser = await deleteUserData(id);
-    this.errHandlerUser(deletedUser, res);
+      const deletedUser = await deleteUserData(id);
+      this.errHandlerUser(deletedUser, res);
 
-    res.writeHead(204, { "Content-Type": "application/json" });
-    res.end();
+      res.writeHead(204, { "Content-Type": "application/json" });
+      res.end();
+    }
+    catch (err: any) { console.log(err.message) }
   },
 
   errHandlerUser(user: any, res: ServerResponse) {
     if (!user) {
       res.writeHead(404, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: 'User does not exist' }));
+      throw new Error('User does not exist')
     }
   },
 
@@ -71,6 +84,7 @@ export const usersController = {
     if (!uuidReg.test(id)) {
       res.writeHead(400, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: 'User Id is invalid (not uuid)' }));
+      throw new Error('User Id is invalid (not uuid)')
     }
   },
 
@@ -81,6 +95,7 @@ export const usersController = {
     if (!(isValidAge && isValidUsername && isValidHobbies && Object.keys(userBody).length === 3)) {
       res.writeHead(400, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: 'Invalid user data' }));
+      throw new Error('Invalid user data')
     }
   }
 }

@@ -49,12 +49,7 @@ export const deleteUserData = async (id: string) => {
   return await new Promise((resolve, reject) => {
     const userIndex = store.users.findIndex((user => user.id === id));
     if (userIndex === -1) reject()
-    console.log(1, store.users);
-
     const deletedUser = store.users.splice(userIndex, 1)
-
-    console.log(2, store.users);
-
     resolve(deletedUser)
   }).catch((err) => { });
 };
