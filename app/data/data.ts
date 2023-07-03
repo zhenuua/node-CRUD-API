@@ -36,20 +36,27 @@ export const createUserData = async (data: IUserPayload) => await new Promise((r
 export const updateUserData = async (id: string, data: IUserPayload) => {
   return await new Promise((resolve, reject) => {
     const userIndex = store.users.findIndex((user => user.id === id));
-    if (userIndex === -1) reject()
-    const updatedUser = store.users.splice(userIndex, 1, {
-      id: id,
-      ...data
-    })
-    resolve(updatedUser)
+    if (userIndex === -1) {
+      reject()
+    }
+    else {
+      const updatedUser = store.users.splice(userIndex, 1, {
+        id: id,
+        ...data
+      })
+      resolve(updatedUser)
+    }
   }).catch((err) => { });
 };
 
 export const deleteUserData = async (id: string) => {
   return await new Promise((resolve, reject) => {
     const userIndex = store.users.findIndex((user => user.id === id));
-    if (userIndex === -1) reject()
-    const deletedUser = store.users.splice(userIndex, 1)
-    resolve(deletedUser)
+    if (userIndex === -1) {
+      reject()
+    } else {
+      const deletedUser = store.users.splice(userIndex, 1)
+      resolve(deletedUser)
+    }
   }).catch((err) => { });
 };
