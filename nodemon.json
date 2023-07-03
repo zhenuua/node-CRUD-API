@@ -2,5 +2,7 @@
   "watch": ["app"],
   "ext": ".ts,.js",
   "ignore": [".git", "node_modules/", "dist/"],
-  "exec": "npx ts-node ./app/server.ts"
+  "execMap": {
+    "ts": "npx ts-node ./app/server.ts"
+  }
 }

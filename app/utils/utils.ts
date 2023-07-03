@@ -1,28 +1,4 @@
-import { IUser, IUserPayload } from "../types";
-import fs from "fs";
-import { IncomingMessage, ServerResponse } from "http";
-import path from "path";
-
-export const saveData = (data: IUser[]) => {
-  try {
-    fs.writeFileSync(
-      path.join(__dirname, "..", "data", "users.json"),
-      JSON.stringify(data),
-      "utf-8"
-    );
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const validateJSON = (str: string) => {
-  try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
-  }
-  return true;
-}
+import { IncomingMessage } from "http";
 
 export const getUserIdFromUrl = (url: string | undefined) => url ? url.split("/")[3] : '';
 
