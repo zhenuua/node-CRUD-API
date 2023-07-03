@@ -3,6 +3,12 @@
 ## Routes
 
 ```bash
+default_port 4000
+load_balancer_port 8000
+
+```
+
+```bash
 GET      api/users
 GET      api/users/{userId}
 POST     api/users
@@ -22,4 +28,7 @@ npm run start:dev
 
 # Run in production
 npm run start:prod
+
+# Run with Load balancer
+npm run start:multi
 ```

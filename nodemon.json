@@ -3,6 +3,6 @@
   "ext": ".ts,.js",
   "ignore": [".git", "node_modules/", "dist/"],
   "execMap": {
-    "ts": "npx ts-node ./app/server.ts"
+    "ts": "ts-node"
   }
 }
